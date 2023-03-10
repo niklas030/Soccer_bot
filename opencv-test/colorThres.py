@@ -19,7 +19,6 @@ thres_high = 255
 def trackedCallback(val):
      global LOW_H, LOW_S, LOW_V, HIGH_H, HIGH_S, HIGH_V, thres_low, thres_high
      #set the location of the trackbar to the bottom of the window
-     
      LOW_H = cv.getTrackbarPos("LOW_H", "frame")
      LOW_S = cv.getTrackbarPos("LOW_S", "frame")
      LOW_V = cv.getTrackbarPos("LOW_V", "frame")
@@ -91,7 +90,12 @@ while(True):
     filtered[imask] = frame[imask]
 
     # convert filtered to an gray image
+    filtered = cv.GaussianBlur(filtered, (5, 5), 0)
+    # filter all color out which are not orange
+    
+
     gray = cv.cvtColor(filtered, cv.COLOR_BGR2GRAY)
+    
     ret,thresh1 = cv.threshold(gray,thres_low,thres_high,cv.THRESH_BINARY)
 
     # do a hought circle detection on the filtered image
